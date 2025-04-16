@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>EV Routing</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/maps/maps.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/pages/ev_routing.css" rel="stylesheet">
+
+  <!-- Scripts -->
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/maps/maps-web.min.js"></script>
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/services/services-web.min.js"></script>
+</head>
+
+<body>
+  <!-- Map Container -->
+  <div id="map"></div>
+
+  <!-- Map Overlay -->
+  <div class="map-overlay" id="overlay"></div>
+
+  <!-- Central Box -->
+  <div class="central-box" id="central-box">
+    <div class="header">
+      <h1>Find EV Route</h1>
+      <p>Plan your journey with optimal charging stops</p>
+    </div>
+
+    <div class="nav-tabs">
+      <a href="ev_search.html" class="nav-tab">Search</a>
+      <a href="#" class="nav-tab active">Route</a>
+      <a href="book_slot.html" class="nav-tab">Book Slot</a>
+    </div>
+
+    <div class="form-container">
+      <div class="input-group">
+        <label for="start" class="input-label">
+          <i class="fas fa-map-marker-alt"></i> Starting Location
+        </label>
+        <input type="text" id="start" class="input-field" placeholder="Enter starting point">
+        <button class="location-btn" onclick="useCurrentLocation('start')" title="Use current location">
+          <i class="fas fa-crosshairs"></i>
+        </button>
+      </div>
+
+      <div class="input-group">
+        <label for="finish" class="input-label">
+          <i class="fas fa-flag-checkered"></i> Destination
+        </label>
+        <input type="text" id="finish" class="input-field" placeholder="Enter destination">
+        <button class="location-btn" onclick="selectFromStations()" title="Select from stations">
+          <i class="fas fa-charging-station"></i>
+        </button>
+      </div>
+      
+      <button class="btn" onclick="handleRouteSearch()">
+        <i class="fas fa-route"></i> Calculate Route
+      </button>
+    </div>
+  </div>
+
+  <!-- Sidebar Toggle Button -->
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div class="header">
+      <div>
+        <h1>EV Route Planner</h1>
+        <p>Plan your journey with charging stops</p>
+      </div>
+      <button class="close-sidebar" id="closeSidebar">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="nav-tabs">
+      <a href="ev_search.html" class="nav-tab">Search</a>
+      <a href="#" class="nav-tab active">Route</a>
+      <a href="book_slot.html" class="nav-tab">Book Slot</a>
+    </div>
+
+    <div id="route-details" class="form-container">
+      <!-- Route details will be shown here -->
+    </div>
+  </div>
+
+  <!-- Home Button -->
+  <a href="index.html" class="home-button" onclick="window.scrollTo(0, 0);">
+    <i class="fas fa-home"></i>
+  </a>
+
+  <!-- External JavaScript -->
+  <script src="js/ev_routing.js"></script>
+  <script src="js/pages/ev_routing_ui.js"></script>
+</body>
+
+</html>

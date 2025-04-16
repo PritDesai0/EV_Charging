@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta charset="UTF-8">
+  <title>EV Search</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <!-- External CSS -->
+  <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/maps/maps.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/pages/ev_search.css" rel="stylesheet">
+
+  <!-- External JavaScript -->
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/maps/maps-web.min.js"></script>
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/services/services-web.min.js"></script>
+  <script src="js/chargingAvailability.js"></script>
+</head>
+
+<body>
+  <!-- Map Container -->
+  <div id="map"></div>
+
+  <!-- Map Overlay -->
+  <div class="map-overlay" id="mapOverlay"></div>
+
+  <!-- Sidebar Toggle Button -->
+  <button class="sidebar-toggle" id="sidebarToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <!-- Central Search Box -->
+  <div class="central-box" id="central-box">
+      <div class="header">
+      <h1>Find Charging Stations</h1>
+      <p>Search for nearby EV charging stations</p>
+      </div>
+      
+    <div class="nav-tabs">
+      <a href="#" class="nav-tab active">Search</a>
+      <a href="ev_routing.html" class="nav-tab">Route</a>
+      <a href="book_slot.html" class="nav-tab">Book Slot</a>
+        </div>
+        
+    <div class="form-container">
+      <div class="input-group">
+        <label for="location" class="input-label">
+          <i class="fas fa-map-marker-alt"></i> Location
+        </label>
+        <input class="input-field" id="location" type="text" placeholder="Enter your location" />
+      </div>
+        <div class="input-group">
+        <label for="distance" class="input-label">
+          <i class="fas fa-road"></i> Maximum Distance (km)
+        </label>
+        <input class="input-field" id="distance" type="text" value="10" placeholder="Enter distance in km" />
+        </div>
+      <button class="btn" onclick="handleSearch()">
+          <i class="fas fa-search"></i> Find Stations
+        </button>
+    </div>
+      </div>
+      
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div class="sidebar-header">
+      <h2>EV Stations</h2>
+      <button class="close-sidebar" id="closeSidebar">
+        <i class="fas fa-times"></i>
+      </button>
+        </div>
+    <div class="nav-tabs">
+      <a href="#" class="nav-tab active">Search</a>
+      <a href="ev_routing.html" class="nav-tab">Route</a>
+      <a href="book_slot.html" class="nav-tab">Book Slot</a>
+    </div>
+    
+    <div id="stations-list" class="form-container">
+      <!-- Station details will be shown here -->
+    </div>
+  </div>
+
+  <!-- Home Button -->
+  <a href="index.html" class="home-button">
+    <i class="fas fa-home"></i>
+  </a>
+
+  <!-- External JavaScript -->
+  <script src="js/ev_search.js"></script>
+  <script src="js/pages/ev_search.js"></script>
+</body>
+
+</html>

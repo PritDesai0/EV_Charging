@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Register - EV Charging Stations</title>
+    
+    <!-- External Resources -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/pages/register.css" rel="stylesheet">
+</head>
+
+<body>
+    <a href="index.html" class="back-to-home">
+        <i class="fas fa-home"></i>
+    </a>
+
+    <div class="register-container" data-aos="fade-up">
+        <div class="register-header">
+            <h2>Create Account</h2>
+            <p>Join the EV charging network</p>
+        </div>
+
+        <form id="registerForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="firstName" placeholder="John" required>
+                        <label for="firstName">First Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="lastName" placeholder="Doe" required>
+                        <label for="lastName">Last Name</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                <label for="email">Email address</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="tel" class="form-control" id="phone" placeholder="12345 67899" required pattern="^[0-9]{10}$" required>
+                <label for="phone">Phone number</label>
+            </div>
+
+            <div class="form-floating mb-3 position-relative">
+                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                <label for="password">Password</label>
+                <button type="button" class="btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent password-toggle" style="z-index: 5; right: 10px;">
+                    <i class="far fa-eye"></i>
+                </button>
+            </div>
+
+            <div id="passwordRequirements" class="text-secondary small mb-3 d-none">
+                <div id="uppercase"><i class="fas fa-times-circle me-1"></i> One uppercase letter</div>
+                <div id="lowercase"><i class="fas fa-times-circle me-1"></i> One lowercase letter</div>
+                <div id="number"><i class="fas fa-times-circle me-1"></i> One number</div>
+                <div id="special"><i class="fas fa-times-circle me-1"></i> One special character</div>
+                <div id="length"><i class="fas fa-times-circle me-1"></i> At least 8 characters</div>
+            </div>
+
+            <div class="form-floating mb-3 position-relative">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                <label for="confirmPassword">Confirm Password</label>
+            </div>
+
+            <div id="passwordMatch" class="text-danger small mb-3 d-none">
+                Passwords do not match
+            </div>
+
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="terms" required>
+                <label class="form-check-label" for="terms">I agree to the <a href="#">Terms and Conditions</a></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100"  onclick="handleClick(event)" >Create Account</button>
+        </form>
+
+        <div class="register-footer">
+            <p>Already have an account? <a href="login.html">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/pages/register.js"></script>
+</body>
+
+</html>

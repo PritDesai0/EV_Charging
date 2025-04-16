@@ -1,0 +1,207 @@
+/* Main Styles for EV Charging Station Application */
+
+:root {
+  --primary: #007bff;
+  --primary-light: #4da3ff;
+  --primary-dark: #0056b3;
+  --secondary: #6c757d;
+  --accent: #00d26a;
+  --accent-dark: #00a955;
+  --dark: #343a40;
+  --light: #f8f9fa;
+  --white: #FFFFFF;
+  --shadow: 0 4px 15px rgba(0, 123, 255, 0.15);
+  --transition: all 0.3s ease;
+  --gradient: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--dark);
+}
+
+body, html {
+  height: 100%;
+}
+
+/* Map Containers */
+#map, .map-container {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  max-width: 364px;
+  background-color: #f2f2f2;
+  z-index: 2;
+}
+
+/* Buttons */
+.btn {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  border-radius: 4px;
+  color: var(--white);
+  font-weight: 700;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.btn:active {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+  box-shadow: none !important;
+  transform: translateY(0);
+}
+
+/* Forms */
+input[type=text], input[type=email], input[type=password], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+button[type=submit] {
+  background-color: var(--primary);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+button[type=submit]:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Utilities */
+.text-gradient {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shadow-hover {
+  transition: var(--transition);
+}
+
+.shadow-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: var(--primary);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+  
+  input[type=text], input[type=email], input[type=password], select, textarea {
+    padding: 10px;
+  }
+}

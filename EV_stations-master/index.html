@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>EV Charging Stations</title>
+    
+    <!-- External Resources -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/pages/index.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="javascript:void(0)" id="refreshLogo">
+                <i class="fas fa-charging-station"></i>
+                EV Stations
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <button id="authBtn" class="nav-link login-btn"></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1>Smart EV Charging Solutions</h1>
+                    <p>Experience the future of electric vehicle charging with our intelligent platform. Find stations, plan routes, and book slots seamlessly.</p>
+                    <div class="d-flex gap-3 flex-wrap btn-container">
+                        <a href="ev_search.html" class="btn btn-primary">
+                            <i class="fas fa-search me-2"></i>Find Stations
+                        </a>
+                        <a href="ev_routing.html" class="btn btn-primary">
+                            <i class="fas fa-route me-2"></i>Plan Route
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-center align-items-center mt-4 mt-lg-0" data-aos="fade-left">
+                    <img src="https://images.unsplash.com/photo-1593941707882-a5bba14938c7?ixlib=rb-4.0.3" 
+                         alt="EV Charging" class="img-fluid floating shadow-hover" 
+                         loading="lazy" width="100%" height="auto">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-card shadow-hover">
+                        <div class="stat-number" data-count="500">0</div>
+                        <p class="stat-label">Charging Stations</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-card shadow-hover">
+                        <div class="stat-number" data-count="10000">0</div>
+                        <p class="stat-label">Happy Users</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-card shadow-hover">
+                        <div class="stat-number" data-count="50000">0</div>
+                        <p class="stat-label">Charging Sessions</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-card shadow-hover">
+                        <div class="stat-number" data-count="100" data-symbol="+">0</div>
+                        <p class="stat-label">Cities Covered</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12 section-header">
+                    <h2 class="text-gradient">Smart Features</h2>
+                    <p class="text-muted">Empowering your electric journey with innovative solutions</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <i class="fas fa-search feature-icon"></i>
+                        <h3>Smart Station Finder</h3>
+                        <p>Find nearby charging stations with real-time availability, ratings, and amenities information.</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="ev_search.html" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i>Explore Stations
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <i class="fas fa-route feature-icon"></i>
+                        <h3>Intelligent Route Planning</h3>
+                        <p>Plan your journey with AI-powered route optimization and charging stop recommendations.</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="ev_routing.html" class="btn btn-primary">
+                                <i class="fas fa-route me-2"></i>Plan Your Trip
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <i class="fas fa-calendar-check feature-icon"></i>
+                        <h3>Easy Slot Booking</h3>
+                        <p>Reserve charging slots in advance with our seamless booking system and instant confirmation.</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="book_slot.html" class="btn btn-primary">
+                                <i class="fas fa-calendar-check me-2"></i>Book Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12 section-header">
+                    <h2 class="text-gradient">What Users Say</h2>
+                    <p class="text-muted">Real experiences from our satisfied users</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" class="testimonial-img">
+                        <h4>John Smith</h4>
+                        <p class="text-muted">Tesla Model 3 Owner</p>
+                        <p>"The route planning feature is fantastic! It takes all the anxiety out of long-distance EV travel."</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="User" class="testimonial-img">
+                        <h4>Sarah Johnson</h4>
+                        <p class="text-muted">Nissan Leaf Owner</p>
+                        <p>"Being able to book charging slots in advance has made my daily commute so much more convenient!"</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mx-auto" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="User" class="testimonial-img">
+                        <h4>Mike Wilson</h4>
+                        <p class="text-muted">Hyundai Kona Owner</p>
+                        <p>"The real-time availability feature has saved me so much time. No more driving to occupied stations!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-charging-station"></i>
+                        <span>EV Stations</span>
+                    </a>
+                    <p class="mt-3">We're committed to making electric vehicle charging accessible, convenient, and sustainable for everyone. Join us in the journey towards a greener future.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" data-tooltip="Follow on Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" data-tooltip="Follow on Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link" data-tooltip="Follow on Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" data-tooltip="Connect on LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                    <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Testimonials</a></li>
+                    <li><a href="login.html"><i class="fas fa-chevron-right"></i> Login</a></li>
+                    <li><a href="login.html"><i class="fas fa-chevron-right"></i> Register</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h4 class="footer-title">Our Services</h4>
+                <ul class="footer-links">
+                    <li><a href="ev_search.html"><i class="fas fa-charging-station"></i> Find Charging Stations</a></li>
+                    <li><a href="ev_routing.html"><i class="fas fa-route"></i> Route Planning</a></li>
+                    <li><a href="book_slot.html"><i class="fas fa-calendar-check"></i> Slot Booking</a></li>
+                    <li><a href="#"><i class="fas fa-map-marked-alt"></i> Station Mapping</a></li>
+                    <li><a href="#"><i class="fas fa-bolt"></i> Real-time Availability</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h4 class="footer-title">Contact Info</h4>
+                <ul class="footer-contact">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h5>Location</h5>
+                            <p>Surat, Gujarat, India</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h5>Call Us</h5>
+                            <p>+91 99098 04014</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h5>Email Us</h5>
+                            <p>desaiprit25@gmail.com</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-md-0">© 2025 EV Stations. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="footer-bottom-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- External JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+    </script>
+    <script src="js/pages/index.js"></script>
+</body>
+
+</html>

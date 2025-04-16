@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Book Charging Slot</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+  <!-- External CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/maps/maps.css">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/pages/book_slot.css" rel="stylesheet">
+  
+  <!-- External JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/maps/maps-web.min.js"></script>
+  <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.36.1/services/services-web.min.js"></script>
+</head>
+
+<body>
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <a href="index.html" class="nav-tab">
+      <i class="fas fa-home"></i> Home
+    </a>
+    <a href="ev_search.html" class="nav-tab">
+      <i class="fas fa-search"></i> Find Stations
+    </a>
+    <a href="book_slot.html" class="nav-tab active">
+      <i class="fas fa-calendar-alt"></i> Book Slot
+    </a>
+    <a href="ev_routing.html" class="nav-tab">
+      <i class="fas fa-route"></i> EV Routing
+    </a>
+  </div>
+
+  <div class="container">
+    <div class="page-header">
+      <h1>Book a Charging Slot</h1>
+      <p>Reserve your charging time slot at your preferred EV station</p>
+    </div>
+
+    <div class="booking-card">
+      <div class="booking-header">
+        <h2>Booking Details</h2>
+        <p>Fill in the information below to secure your slot</p>
+        <div class="charging-icon">
+          <i class="fas fa-bolt"></i>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <form id="booking-form">
+          <!-- Station Information -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <i class="fas fa-map-marker-alt"></i> Station Information
+            </div>
+            
+            <div class="station-card">
+              <div class="station-image-placeholder">
+                <i class="fas fa-charging-station"></i>
+              </div>
+              <div class="station-details">
+                <div class="station-name">Select a charging station</div>
+                <div class="station-rating"><i class="fas fa-star"></i> 4.8</div>
+                <div class="form-group">
+                  <label for="station-address">Station Address</label>
+                  <input type="text" class="form-control" id="station-address" placeholder="Station address" required readonly>
+                </div>
+                <div class="station-info">
+                  <!-- Station info items will be populated dynamically -->
+                </div>
+              </div>
+            </div>
+            
+            <div class="my-location-section">
+              <button id="detect-location-btn" class="btn btn-outline-primary" onclick="detectMyLocation()">
+                <i class="fas fa-location-arrow"></i> Detect My Location
+              </button>
+              <div id="my-location-display" class="my-location-display">
+                <div class="my-location-info">
+                  <i class="fas fa-map-marker-alt"></i> <span id="my-location-address">Your location will appear here</span>
+                </div>
+                <div id="distance-to-station" class="distance-info hidden">
+                  <i class="fas fa-route"></i> <span id="distance-value">-</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="help-text">
+              <i class="fas fa-info-circle"></i> Station information is populated from your station selection
+              <a href="ev_search.html" class="change-station-link">Find or Change Station</a>
+            </div>
+          </div>
+
+          <!-- Vehicle Information -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <i class="fas fa-car"></i> Vehicle Information
+            </div>
+            <div class="form-group">
+              <label for="vehicle-type">Vehicle Type</label>
+              <select class="form-control" id="vehicle-type" required>
+                <option value="" selected disabled>Select vehicle type</option>
+                <option value="sedan">Sedan</option>
+                <option value="suv">SUV</option>
+                <option value="hatchback">Hatchback</option>
+                <option value="van">Van</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="vehicle-model">Vehicle Model</label>
+              <input type="text" class="form-control" id="vehicle-model" placeholder="e.g. Tata Nexon" required>
+            </div>
+            <div class="form-group">
+              <label for="vehicle-number">Registration Number</label>
+              <input type="text" class="form-control" id="vehicle-number" placeholder="e.g. AB-12-CD-3456" required>
+            </div>
+          </div>
+
+          <!-- Charging Options -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <i class="fas fa-plug"></i> Charging Options
+            </div>
+            <label>Charging Port Type</label>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="charging-port" value="CSS" required>
+                <div class="radio-card-content">
+                  <div class="radio-card-icon">
+                    <i class="fas fa-plug"></i>
+                  </div>
+                  <div class="radio-card-label">CSS</div>
+                </div>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="charging-port" value="Type 1">
+                <div class="radio-card-content">
+                  <div class="radio-card-icon">
+                    <i class="fas fa-bolt"></i>
+                  </div>
+                  <div class="radio-card-label">Type 1</div>
+                </div>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="charging-port" value="Type 2">
+                <div class="radio-card-content">
+                  <div class="radio-card-icon">
+                    <i class="fas fa-charging-station"></i>
+                  </div>
+                  <div class="radio-card-label">Type 2</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Date and Time Selection -->
+          <div class="form-section date-time-section">
+            <div class="form-section-title">
+              <i class="far fa-calendar-alt"></i> Select Date & Time
+            </div>
+
+            <!-- Simplified Date Picker -->
+            <div class="booking-calendar-container">
+              <div class="date-selection-wrapper">
+                <label for="booking-date">Booking Date</label>
+                <div class="input-with-icon date-input-container">
+                  <input type="text" class="form-control" id="booking-date" placeholder="Select date" required>
+                  <i class="far fa-calendar-alt"></i>
+                </div>
+                <div class="date-quick-select">
+                  <button type="button" class="date-quick-btn today-btn" data-date="today">Today</button>
+                  <button type="button" class="date-quick-btn tomorrow-btn" data-date="tomorrow">Tomorrow</button>
+                </div>
+              </div>
+              
+              <!-- Time slot selection with visual time representation -->
+              <div class="time-selection-wrapper">
+                <label>Time Slot</label>
+                <div class="time-slots-scroll">
+                  <div class="time-periods">
+                    <div class="period-label">Morning</div>
+                    <div class="time-group">
+                      <div class="time-slot-btn" data-time="08:00">
+                        <span>8:00</span>
+                        <span class="period">AM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="09:00">
+                        <span>9:00</span>
+                        <span class="period">AM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="10:00">
+                        <span>10:00</span>
+                        <span class="period">AM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="11:00">
+                        <span>11:00</span>
+                        <span class="period">AM</span>
+                      </div>
+                    </div>
+                    
+                    <div class="period-label">Afternoon</div>
+                    <div class="time-group">
+                      <div class="time-slot-btn" data-time="12:00">
+                        <span>12:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="13:00">
+                        <span>1:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="14:00">
+                        <span>2:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="15:00">
+                        <span>3:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                    </div>
+                    
+                    <div class="period-label">Evening</div>
+                    <div class="time-group">
+                      <div class="time-slot-btn" data-time="16:00">
+                        <span>4:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="17:00">
+                        <span>5:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="18:00">
+                        <span>6:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                      <div class="time-slot-btn" data-time="19:00">
+                        <span>7:00</span>
+                        <span class="period">PM</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Selected booking summary -->
+              <div class="booking-time-summary">
+                <input type="hidden" id="booking-time" required>
+                <div class="selected-time-display">
+                  <i class="far fa-clock"></i>
+                  <span id="selected-slot-display">Select a time slot</span>
+                </div>
+                
+                <div class="duration-selector">
+                  <label for="duration">Duration</label>
+                  <div class="duration-slider-container">
+                    <select id="duration" class="form-control">
+                      <option value="1">1 hour</option>
+                      <option value="2">2 hours</option>
+                      <option value="3">3 hours</option>
+                      <option value="4">4 hours</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Status indicators -->
+              <div class="slot-status-indicators">
+                <div class="status-item">
+                  <span class="status-dot available"></span>
+                  <span>Available</span>
+                </div>
+                <div class="status-item">
+                  <span class="status-dot selected"></span>
+                  <span>Selected</span>
+                </div>
+                <div class="status-item">
+                  <span class="status-dot unavailable"></span>
+                  <span>Unavailable</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <button type="button" class="btn btn-outline" onclick="resetForm()">
+              <i class="fas fa-undo"></i> Reset Form
+            </button>
+            <button type="button" class="btn btn-primary" onclick="showPaymentModal()">
+              <i class="fas fa-credit-card"></i> Proceed to Payment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div id="payment-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-credit-card"></i> Complete Payment</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="payment-summary-card">
+          <div class="payment-summary-header">
+            <h3>Booking Summary</h3>
+            <div class="amount-badge">₹149.00</div>
+          </div>
+          <div class="booking-summary"></div>
+        </div>
+        
+        <h3 class="payment-section-title">Select Payment Method</h3>
+        
+        <div class="payment-options">
+          <label class="payment-option" for="payment-card">
+            <input type="radio" name="payment-method" id="payment-card" value="card">
+            <div class="payment-option-content">
+              <div class="payment-option-icon">
+                <i class="fas fa-credit-card"></i>
+              </div>
+              <div class="payment-option-label">Card</div>
+            </div>
+          </label>
+          
+          <label class="payment-option" for="payment-upi">
+            <input type="radio" name="payment-method" id="payment-upi" value="upi">
+            <div class="payment-option-content">
+              <div class="payment-option-icon">
+                <i class="fas fa-mobile-alt"></i>
+              </div>
+              <div class="payment-option-label">UPI</div>
+            </div>
+          </label>
+          
+          <label class="payment-option" for="payment-netbanking">
+            <input type="radio" name="payment-method" id="payment-netbanking" value="netbanking">
+            <div class="payment-option-content">
+              <div class="payment-option-icon">
+                <i class="fas fa-university"></i>
+              </div>
+              <div class="payment-option-label">NetBanking</div>
+            </div>
+          </label>
+          
+          <label class="payment-option" for="payment-wallet">
+            <input type="radio" name="payment-method" id="payment-wallet" value="wallet">
+            <div class="payment-option-content">
+              <div class="payment-option-icon">
+                <i class="fas fa-wallet"></i>
+              </div>
+              <div class="payment-option-label">Wallet</div>
+            </div>
+          </label>
+        </div>
+        
+        <!-- Card Payment Section -->
+        <div id="card-payment-section" class="payment-method-section">
+          <div class="card-payment-form">
+            <div class="form-group">
+              <label><i class="far fa-credit-card"></i> Card Number</label>
+              <input type="text" class="form-control" placeholder="1234 5678 9012 3456">
+            </div>
+            
+            <div class="card-details-row">
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="text" class="form-control" placeholder="MM/YY">
+              </div>
+              <div class="form-group">
+                <label>CVV</label>
+                <input type="text" class="form-control" placeholder="123">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Name on Card</label>
+              <input type="text" class="form-control" placeholder="John Doe">
+            </div>
+            
+            <div class="accepted-cards">
+              <span>We accept:</span>
+              <i class="fab fa-cc-visa"></i>
+              <i class="fab fa-cc-mastercard"></i>
+              <i class="fab fa-cc-amex"></i>
+              <i class="fab fa-cc-discover"></i>
+            </div>
+          </div>
+        </div>
+        
+        <!-- UPI Payment Section -->
+        <div id="upi-payment-section" class="payment-method-section">
+          <div class="payment-method-container">
+            <div class="qr-container">
+              <div class="qr-code-wrapper">
+                <div class="qr-scan-animation"></div>
+                <div class="qr-code-placeholder">
+                  <i class="fas fa-qrcode"></i>
+                </div>
+              </div>
+              <div class="upi-id-container">
+                <p>Scan this QR code with any UPI app</p>
+                <div class="upi-id-input">
+                  <input type="text" value="evcharging@ybl" readonly>
+                  <button class="btn-small" onclick="copyUpiId()">Copy</button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="upi-apps">
+              <p class="upi-apps-title">or Pay using UPI apps</p>
+              <div class="upi-apps-container">
+                <div class="upi-app">
+                  <img src="https://images.news18.com/ibnlive/uploads/2020/05/googlepay.png" alt="Google Pay">
+                  <span>Google Pay</span>
+                </div>
+                <div class="upi-app">
+                  <img src="https://assetscdn1.paytm.com/images/catalog/product/D/DE/DEAPAYTM-ICICI-AZM45379CEAAC2D/0x1920/70/0.png" alt="Paytm">
+                  <span>Paytm</span>
+                </div>
+                <div class="upi-app">
+                  <img src="https://play-lh.googleusercontent.com/B5cNBA15Yn2ZQUgv-P0jT3k6AlaRInBnqruu41jNF2UdFX6sxZvqRUTy7zZNtFzrpQ=w240-h480-rw" alt="PhonePe">
+                  <span>PhonePe</span>
+                </div>
+                <div class="upi-app">
+                  <img src="https://images.moneycontrol.com/static-mcnews/2020/09/amazon-pay-770x433.jpg" alt="Amazon Pay">
+                  <span>Amazon Pay</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Netbanking Payment Section -->
+        <div id="netbanking-payment-section" class="payment-method-section">
+          <div class="bank-selection">
+            <div class="form-group">
+              <label><i class="fas fa-university"></i> Select Your Bank</label>
+              <select class="form-control">
+                <option value="" selected disabled>Choose your bank</option>
+                <option value="sbi">State Bank of India</option>
+                <option value="hdfc">HDFC Bank</option>
+                <option value="icici">ICICI Bank</option>
+                <option value="axis">Axis Bank</option>
+                <option value="kotak">Kotak Mahindra Bank</option>
+                <option value="yes">Yes Bank</option>
+                <option value="pnb">Punjab National Bank</option>
+                <option value="bob">Bank of Baroda</option>
+              </select>
+            </div>
+            
+            <div class="popular-banks">
+              <p class="popular-banks-title">Popular Banks</p>
+              <div class="banks-grid">
+                <div class="bank-icon" data-bank="sbi">
+                  <img src="https://1000logos.net/wp-content/uploads/2018/03/SBI-Logo.png" alt="SBI">
+                  <span>SBI</span>
+                </div>
+                <div class="bank-icon" data-bank="hdfc">
+                  <img src="https://www.hdfcbank.com/content/api/contentstream-id/723fb80a-2dde-42a3-9793-7ae1be57c87f/9abd521e-4c0e-4c82-a5d1-1a35ac804053/personal/ways-to-bank/digital-banking/netbanking/image/HDFC-Bank-logo_horizontal.png" alt="HDFC">
+                  <span>HDFC</span>
+                </div>
+                <div class="bank-icon" data-bank="icici">
+                  <img src="https://1000logos.net/wp-content/uploads/2021/05/ICICI-Bank-logo.png" alt="ICICI">
+                  <span>ICICI</span>
+                </div>
+                <div class="bank-icon" data-bank="axis">
+                  <img src="https://1000logos.net/wp-content/uploads/2021/05/Axis-Bank-logo.png" alt="Axis">
+                  <span>Axis</span>
+                </div>
+              </div>
+            </div>
+            
+            <p class="netbanking-note">
+              <i class="fas fa-info-circle"></i> You will be redirected to your bank's secure payment page
+            </p>
+          </div>
+        </div>
+        
+        <!-- Wallet Payment Section -->
+        <div id="wallet-payment-section" class="payment-method-section">
+          <p>Select your preferred wallet</p>
+          <div class="wallet-options">
+            <div class="wallet-option">
+              <img src="https://assetscdn1.paytm.com/images/catalog/product/D/DE/DEAPAYTM-ICICI-AZM45379CEAAC2D/0x1920/70/0.png" alt="Paytm">
+              <span>Paytm</span>
+            </div>
+            <div class="wallet-option">
+              <img src="https://play-lh.googleusercontent.com/B5cNBA15Yn2ZQUgv-P0jT3k6AlaRInBnqruu41jNF2UdFX6sxZvqRUTy7zZNtFzrpQ=w240-h480-rw" alt="PhonePe">
+              <span>PhonePe</span>
+            </div>
+            <div class="wallet-option">
+              <img src="https://images.moneycontrol.com/static-mcnews/2020/09/amazon-pay-770x433.jpg" alt="Amazon Pay">
+              <span>Amazon Pay</span>
+            </div>
+            <div class="wallet-option">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mobikwik_Logo.svg/1200px-Mobikwik_Logo.svg.png" alt="Mobikwik">
+              <span>Mobikwik</span>
+            </div>
+          </div>
+          <p class="wallet-note">
+            <i class="fas fa-info-circle"></i> You will be redirected to complete payment with the selected wallet
+          </p>
+        </div>
+        
+        <div class="payment-breakdown">
+          <div class="breakdown-title">Payment Breakdown</div>
+          <div class="breakdown-item">
+            <span>Charging Fee</span>
+            <span>₹120.00</span>
+          </div>
+          <div class="breakdown-item">
+            <span>Service Fee</span>
+            <span>₹20.00</span>
+          </div>
+          <div class="breakdown-item">
+            <span>Tax (18%)</span>
+            <span>₹9.00</span>
+          </div>
+          <div class="breakdown-item total">
+            <span>Total</span>
+            <span>₹149.00</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <div class="payment-security-badge">
+          <i class="fas fa-shield-alt"></i> Secure Payment
+        </div>
+        <button class="btn btn-primary" id="pay-now-btn" onclick="pay(event)">Pay ₹149</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal" id="success-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fas fa-check-circle"></i> Booking Confirmed!</h3>
+      </div>
+      <div class="modal-body">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="success-message">
+          <h3>Your EV charging slot is confirmed</h3>
+          <p>We've sent the details to your email</p>
+        </div>
+        <div class="booking-id">
+          BOOKING ID: EV-2023-<span id="random-id">58924</span>
+        </div>
+        <div class="summary-title">
+          <i class="fas fa-receipt"></i> Booking Details
+        </div>
+        <div class="booking-summary">
+          <!-- Will be populated dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="index.html" class="btn btn-primary">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt Modal -->
+  <div class="modal" id="receipt-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fas fa-receipt"></i> Booking Receipt</h3>
+        <div class="modal-close" onclick="closeReceiptModal()">
+          <i class="fas fa-times"></i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="receipt-container" id="receipt-content">
+          <div class="receipt-header">
+            <div class="receipt-logo">
+              <i class="fas fa-charging-station"></i>
+            </div>
+            <h2>EV Charging Receipt</h2>
+            <div class="receipt-status">Payment Successful</div>
+          </div>
+          
+          <div class="receipt-info">
+            <div class="receipt-info-title">Booking Information</div>
+            <div class="receipt-row">
+              <span>Booking ID:</span>
+              <span id="receipt-booking-id">EV-2023-58924</span>
+            </div>
+            <div class="receipt-row">
+              <span>Date & Time:</span>
+              <span id="receipt-datetime">12 Nov 2023, 10:00 AM</span>
+            </div>
+            <div class="receipt-row">
+              <span>Duration:</span>
+              <span id="receipt-duration">2 hours</span>
+            </div>
+            <div class="receipt-row">
+              <span>Payment Date:</span>
+              <span id="receipt-payment-date">12 Nov 2023, 08:45 AM</span>
+            </div>
+          </div>
+          
+          <div class="receipt-station">
+            <div class="receipt-info-title">Station Details</div>
+            <div class="receipt-row">
+              <span>Station:</span>
+              <span id="receipt-station-name">Green EV Charging Hub</span>
+            </div>
+            <div class="receipt-row">
+              <span>Address:</span>
+              <span id="receipt-station-address">123 Main St, City</span>
+            </div>
+            <div class="receipt-row">
+              <span>Charging Port:</span>
+              <span id="receipt-charging-port">Type 2</span>
+            </div>
+          </div>
+          
+          <div class="receipt-vehicle">
+            <div class="receipt-info-title">Vehicle Details</div>
+            <div class="receipt-row">
+              <span>Vehicle:</span>
+              <span id="receipt-vehicle">Tesla Model 3</span>
+            </div>
+            <div class="receipt-row">
+              <span>Reg. Number:</span>
+              <span id="receipt-reg-number">AB-12-CD-3456</span>
+            </div>
+          </div>
+          
+          <div class="receipt-payment">
+            <div class="receipt-info-title">Payment Details</div>
+            <div class="receipt-row">
+              <span>Charging Fee:</span>
+              <span>₹120.00</span>
+            </div>
+            <div class="receipt-row">
+              <span>Service Fee:</span>
+              <span>₹20.00</span>
+            </div>
+            <div class="receipt-row">
+              <span>Tax:</span>
+              <span>₹9.00</span>
+            </div>
+            <div class="receipt-row total">
+              <span>Total Amount:</span>
+              <span>₹149.00</span>
+            </div>
+            <div class="receipt-row">
+              <span>Payment Method:</span>
+              <span id="receipt-payment-method">UPI</span>
+            </div>
+            <div class="receipt-row">
+              <span>Transaction ID:</span>
+              <span id="receipt-transaction-id">TXN23857349102</span>
+            </div>
+            <div class="receipt-row">
+              <span>Status:</span>
+              <span class="receipt-status-paid">Paid <i class="fas fa-check-circle"></i></span>
+            </div>
+          </div>
+          
+          <div class="receipt-footer">
+            <div class="barcode">
+              <div class="barcode-placeholder"></div>
+            </div>
+            <p>Thank you for choosing our EV charging service!</p>
+            <div class="receipt-contact">
+              <div>For support: <a href="mailto:support@evcharging.com">support@evcharging.com</a></div>
+              <div>Customer Care: <a href="tel:+911234567890">+91 123-456-7890</a></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="receipt-actions">
+          <button class="btn btn-outline" onclick="downloadReceipt()">
+            <i class="fas fa-download"></i> Download
+          </button>
+          <button class="btn btn-outline" onclick="printReceipt()">
+            <i class="fas fa-print"></i> Print
+          </button>
+          <button class="btn btn-outline" onclick="shareReceipt()">
+            <i class="fas fa-share-alt"></i> Share
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="confetti-container"></div>
+
+  <script src="js/pages/book_slot.js"></script>
+</body>
+
+</html>
